@@ -16,6 +16,7 @@ import {
 } from '@shopify/remix-oxygen';
 import {AppSession} from '~/lib/session';
 import {CART_QUERY_FRAGMENT} from '~/lib/fragments';
+import {getOxygenEnv} from '~/lib/utils';
 
 /**
  * Export a fetch handler in module format.
@@ -77,6 +78,8 @@ export default {
         cartQueryFragment: CART_QUERY_FRAGMENT,
       });
 
+      const oxigen = getOxygenEnv(request);
+
       /**
        * Create a Remix request handler and pass
        * Hydrogen's Storefront client to the loader context.
@@ -88,14 +91,16 @@ export default {
           session,
           storefront,
           customerAccount,
+          oxigen,
           cart,
           env,
           waitUntil,
         }),
       });
 
-      const response = await handleRequest(request);
+      console.log('request', JSON.stringify(oxigen));
 
+      const response = await handleRequest(request);
       if (response.status === 404) {
         /**
          * Check for redirects only when there's a 404 from the app.
