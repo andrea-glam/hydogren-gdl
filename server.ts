@@ -17,6 +17,7 @@ import {
 import {AppSession} from '~/lib/session';
 import {CART_QUERY_FRAGMENT} from '~/lib/fragments';
 import {getOxygenEnv, getLocaleFromRequest} from '~/lib/utils';
+import {useI18n} from '@shopify/react-i18n';
 
 /**
  * Export a fetch handler in module format.
@@ -47,7 +48,7 @@ export default {
       const {storefront} = createStorefrontClient({
         cache,
         waitUntil,
-        i18n: {language: 'EN', country: 'US'},
+        i18n: getLocaleFromRequest(request),
         publicStorefrontToken: env.PUBLIC_STOREFRONT_API_TOKEN,
         privateStorefrontToken: env.PRIVATE_STOREFRONT_API_TOKEN,
         storeDomain: env.PUBLIC_STORE_DOMAIN,
@@ -87,6 +88,7 @@ export default {
       const handleRequest = createRequestHandler({
         build: remixBuild,
         mode: process.env.NODE_ENV,
+        // @ts-ignore
         getLoadContext: (): AppLoadContext => ({
           session,
           storefront,

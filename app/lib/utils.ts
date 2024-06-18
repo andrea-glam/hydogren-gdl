@@ -2,6 +2,10 @@ import {useLocation, useRouteLoaderData} from '@remix-run/react';
 import type {MoneyV2} from '@shopify/hydrogen/storefront-api-types';
 import type {FulfillmentStatus} from '@shopify/hydrogen/customer-account-api-types';
 import typographicBase from 'typographic-base';
+import type {
+  CountryCode,
+  LanguageCode,
+} from '@shopify/storefront-kit-react/storefront-api-types';
 
 import type {
   ChildMenuItemFragment,
@@ -17,6 +21,11 @@ type EnhancedMenuItemProps = {
   to: string;
   target: string;
   isExternal?: boolean;
+};
+
+export type Locale = {
+  language: LanguageCode;
+  country: CountryCode;
 };
 
 export type ChildEnhancedMenuItem = ChildMenuItemFragment &
