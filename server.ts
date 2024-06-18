@@ -16,7 +16,7 @@ import {
 } from '@shopify/remix-oxygen';
 import {AppSession} from '~/lib/session';
 import {CART_QUERY_FRAGMENT} from '~/lib/fragments';
-import {getOxygenEnv} from '~/lib/utils';
+import {getOxygenEnv, getLocaleFromRequest} from '~/lib/utils';
 
 /**
  * Export a fetch handler in module format.
@@ -100,6 +100,8 @@ export default {
 
       console.log('request', JSON.stringify(oxigen));
 
+      console.log('locale', JSON.stringify(getLocaleFromRequest(request)));
+
       const response = await handleRequest(request);
       if (response.status === 404) {
         /**
@@ -112,7 +114,6 @@ export default {
 
       return response;
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error(error);
       return new Response('An unexpected error occurred', {status: 500});
     }
